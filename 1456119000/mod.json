@@ -1,0 +1,19 @@
+{
+  "Name": "s6 pack",
+  "Author": "satff0s",
+  "Description": "News guns People Playground",
+  "ModVersion": "0.1",
+  "GameVersion": "1.8 +",
+  "ThumbnailPath": "MODico.png",
+  "EntryPoint": "Mod.Mod",
+  "Tags": [
+    "s6"
+  ],
+  "Scripts": [
+    "all.cs",
+    "CategoryBuilder.cs"
+  ],
+  "Active": true,
+  "UGCIdentity": null,
+  "CreatorUGCIdentity": "1456119000"
+}
