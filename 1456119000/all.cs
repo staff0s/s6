@@ -11,8 +11,8 @@ namespace Mod
             new Modification()
             {
                 OriginalItem = ModAPI.FindSpawnable("Pistol"),
-                NameOverride = "PM",
-                DescriptionOverride = "9x18mm Makarov Pistol",
+                NameOverride = "М-918",
+                DescriptionOverride = "9x18мм самозарядный пистолет",
                 CategoryOverride = ModAPI.FindCategory("S6"),
                 ThumbnailOverride = ModAPI.LoadSprite("icons/pm.png"),
                 AfterSpawn = (Instance) =>
@@ -53,7 +53,7 @@ namespace Mod
             {
                 OriginalItem = ModAPI.FindSpawnable("M1 Garand"),
                 NameOverride = "M-762",
-                DescriptionOverride = "7.62mm Automatic Carabine",
+                DescriptionOverride = "7.62мм автоматический карабин",
                 CategoryOverride = ModAPI.FindCategory("S6"),
                 ThumbnailOverride = ModAPI.LoadSprite("icons/762.png"),
                 AfterSpawn = (Instance) =>
@@ -83,8 +83,50 @@ namespace Mod
                     Cartridge customCartridge = ModAPI.FindCartridge("7,62x39mm");
                     customCartridge.name = "7,62x39mm";
                     customCartridge.Damage *= 7f;
-                    customCartridge.Recoil = 5f;
+                    customCartridge.Recoil = 7f;
                     customCartridge.ImpactForce = 1.7f;
+                    firearm.Cartridge = customCartridge;
+                }
+            }
+            );
+			
+			ModAPI.Register(
+            new Modification()
+            {
+                OriginalItem = ModAPI.FindSpawnable("M1 Garand"),
+                NameOverride = "M-939",
+                DescriptionOverride = "9x39мм малогабаритный автомат",
+                CategoryOverride = ModAPI.FindCategory("S6"),
+                ThumbnailOverride = ModAPI.LoadSprite("icons/939.png"),
+                AfterSpawn = (Instance) =>
+                {
+					ModAPI.KeepExtraObjects();
+        
+					var ThompsonSlide = Instance.transform.Find("Slide");
+                    ThompsonSlide.GetComponent<SpriteRenderer>().sprite = ModAPI.LoadSprite("models/939_sl.png", 19f);
+                    Instance.GetComponent<SpriteRenderer>().sprite = ModAPI.LoadSprite("models/939.png", 16f);
+                    Instance.GetComponent<FirearmBehaviour>().barrelPosition = new Vector2(0.32f, 0.10f);
+                    foreach (var c in Instance.GetComponents<Collider2D>())
+                    {
+                        GameObject.Destroy(c);
+                    }
+                    Instance.FixColliders();
+                    Instance.GetComponent<FirearmBehaviour>().BulletsPerShot = 1;
+
+                    var firearm = Instance.GetComponent<FirearmBehaviour>();
+                    Instance.GetComponent<FirearmBehaviour>().Automatic = true;
+                    Instance.GetComponent<FirearmBehaviour>().AutomaticFireInterval = 0.07f;
+
+                    firearm.ShotSounds = new AudioClip[]
+              {
+            ModAPI.LoadSound("sound/939.wav"),
+                };
+
+                    Cartridge customCartridge = ModAPI.FindCartridge("9mm");
+                    customCartridge.name = "9x39mm";
+                    customCartridge.Damage *= 4f;
+                    customCartridge.Recoil = 1f;
+                    customCartridge.ImpactForce = 0.7f;
                     firearm.Cartridge = customCartridge;
                 }
             }
