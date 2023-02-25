@@ -103,7 +103,7 @@ namespace Mod
 					ModAPI.KeepExtraObjects();
         
 					var ThompsonSlide = Instance.transform.Find("Slide");
-                    ThompsonSlide.GetComponent<SpriteRenderer>().sprite = ModAPI.LoadSprite("models/939_sl.png", 19f);
+                    ThompsonSlide.GetComponent<SpriteRenderer>().sprite = ModAPI.LoadSprite("models/939_sl.png", 17f);
                     Instance.GetComponent<SpriteRenderer>().sprite = ModAPI.LoadSprite("models/939.png", 16f);
                     Instance.GetComponent<FirearmBehaviour>().barrelPosition = new Vector2(0.32f, 0.10f);
                     foreach (var c in Instance.GetComponents<Collider2D>())
@@ -115,7 +115,7 @@ namespace Mod
 
                     var firearm = Instance.GetComponent<FirearmBehaviour>();
                     Instance.GetComponent<FirearmBehaviour>().Automatic = true;
-                    Instance.GetComponent<FirearmBehaviour>().AutomaticFireInterval = 0.07f;
+                    Instance.GetComponent<FirearmBehaviour>().AutomaticFireInterval = 0.08f;
 
                     firearm.ShotSounds = new AudioClip[]
               {
