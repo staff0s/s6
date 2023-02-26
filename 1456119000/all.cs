@@ -176,6 +176,48 @@ namespace Mod
             new Modification()
             {
                 OriginalItem = ModAPI.FindSpawnable("M1 Garand"),
+                NameOverride = "M-185",
+                DescriptionOverride = "9.19мм автоматический карабин",
+                CategoryOverride = ModAPI.FindCategory("S6"),
+                ThumbnailOverride = ModAPI.LoadSprite("icons/185.png"),
+                AfterSpawn = (Instance) =>
+                {
+					ModAPI.KeepExtraObjects();
+        
+					var ThompsonSlide = Instance.transform.Find("Slide");
+                    ThompsonSlide.GetComponent<SpriteRenderer>().sprite = ModAPI.LoadSprite("models/185_sl.png", 19f);
+                    Instance.GetComponent<SpriteRenderer>().sprite = ModAPI.LoadSprite("models/185.png", 17f);
+                    Instance.GetComponent<FirearmBehaviour>().barrelPosition = new Vector2(0.82f, 0.10f);
+                    foreach (var c in Instance.GetComponents<Collider2D>())
+                    {
+                        GameObject.Destroy(c);
+                    }
+                    Instance.FixColliders();
+                    Instance.GetComponent<FirearmBehaviour>().BulletsPerShot = 1;
+
+                    var firearm = Instance.GetComponent<FirearmBehaviour>();
+                    Instance.GetComponent<FirearmBehaviour>().Automatic = true;
+                    Instance.GetComponent<FirearmBehaviour>().AutomaticFireInterval = 0.09f;
+
+                    firearm.ShotSounds = new AudioClip[]
+              {
+            ModAPI.LoadSound("sound/919.wav"),
+                };
+
+                    Cartridge customCartridge = ModAPI.FindCartridge("9mm");
+                    customCartridge.name = "9x18mm";
+                    customCartridge.Damage *= 5f;
+                    customCartridge.Recoil = 2f;
+                    customCartridge.ImpactForce = 1.7f;
+                    firearm.Cartridge = customCartridge;
+                }
+            }
+            );
+			
+			ModAPI.Register(
+            new Modification()
+            {
+                OriginalItem = ModAPI.FindSpawnable("M1 Garand"),
                 NameOverride = "M-939",
                 DescriptionOverride = "9x39мм малогабаритный автомат",
                 CategoryOverride = ModAPI.FindCategory("S6"),
