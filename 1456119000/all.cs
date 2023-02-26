@@ -51,6 +51,47 @@ namespace Mod
 			ModAPI.Register(
             new Modification()
             {
+                OriginalItem = ModAPI.FindSpawnable("Pistol"),
+                NameOverride = "М-919",
+                DescriptionOverride = "9x19мм самозарядный пистолет",
+                CategoryOverride = ModAPI.FindCategory("S6"),
+                ThumbnailOverride = ModAPI.LoadSprite("icons/919.png"),
+                AfterSpawn = (Instance) =>
+                {
+					ModAPI.KeepExtraObjects();
+                    Instance.GetComponent<SpriteRenderer>().sprite = ModAPI.LoadSprite("models/919.png", 25f);
+					var ThompsonSlide = Instance.transform.Find("Slide");
+                    ThompsonSlide.GetComponent<SpriteRenderer>().sprite = ModAPI.LoadSprite("models/919_sl.png", 25f);
+                    Instance.GetComponent<FirearmBehaviour>().barrelPosition = new Vector2(0.25f, 0.10f);
+                    foreach (var c in Instance.GetComponents<Collider2D>())
+                    {
+                        GameObject.Destroy(c);
+                    }
+                    Instance.FixColliders();
+                    Instance.GetComponent<FirearmBehaviour>().BulletsPerShot = 1;
+
+                    var firearm = Instance.GetComponent<FirearmBehaviour>();
+                    Instance.GetComponent<FirearmBehaviour>().Automatic = false;
+                    Instance.GetComponent<FirearmBehaviour>().AutomaticFireInterval = 0.08f;
+
+                    firearm.ShotSounds = new AudioClip[]
+              {
+            ModAPI.LoadSound("sound/9.wav"),
+                };
+
+                    Cartridge customCartridge = ModAPI.FindCartridge("9mm");
+                    customCartridge.name = "9x19mm";
+                    customCartridge.Damage *= 0.1f;
+                    customCartridge.Recoil = 3.2f;
+                    customCartridge.ImpactForce = 0.3f;
+                    firearm.Cartridge = customCartridge;
+                }
+            }
+            );
+			
+			ModAPI.Register(
+            new Modification()
+            {
                 OriginalItem = ModAPI.FindSpawnable("M1 Garand"),
                 NameOverride = "M-762",
                 DescriptionOverride = "7.62мм автоматический карабин",
@@ -124,7 +165,7 @@ namespace Mod
 
                     Cartridge customCartridge = ModAPI.FindCartridge("9mm");
                     customCartridge.name = "9x39mm";
-                    customCartridge.Damage *= 4f;
+                    customCartridge.Damage *= 1f;
                     customCartridge.Recoil = 1f;
                     customCartridge.ImpactForce = 0.7f;
                     firearm.Cartridge = customCartridge;
