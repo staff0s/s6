@@ -76,7 +76,7 @@ namespace Mod
 
                     firearm.ShotSounds = new AudioClip[]
               {
-            ModAPI.LoadSound("sound/9.wav"),
+            ModAPI.LoadSound("sound/921.wav"),
                 };
 
                     Cartridge customCartridge = ModAPI.FindCartridge("9mm");
@@ -117,7 +117,7 @@ namespace Mod
 
                     firearm.ShotSounds = new AudioClip[]
               {
-            ModAPI.LoadSound("sound/9.wav"),
+            ModAPI.LoadSound("sound/919.wav"),
                 };
 
                     Cartridge customCartridge = ModAPI.FindCartridge("9mm");
