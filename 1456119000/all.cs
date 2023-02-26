@@ -38,8 +38,49 @@ namespace Mod
             ModAPI.LoadSound("sound/9.wav"),
                 };
 
-                    Cartridge customCartridge = ModAPI.FindCartridge("9x18mm");
+                    Cartridge customCartridge = ModAPI.FindCartridge("9mm");
                     customCartridge.name = "9x18mm";
+                    customCartridge.Damage *= 0.1f;
+                    customCartridge.Recoil = 3.2f;
+                    customCartridge.ImpactForce = 0.3f;
+                    firearm.Cartridge = customCartridge;
+                }
+            }
+            );
+			
+						ModAPI.Register(
+            new Modification()
+            {
+                OriginalItem = ModAPI.FindSpawnable("Pistol"),
+                NameOverride = "М-921",
+                DescriptionOverride = "9x21мм самозарядный пистолет",
+                CategoryOverride = ModAPI.FindCategory("S6"),
+                ThumbnailOverride = ModAPI.LoadSprite("icons/921.png"),
+                AfterSpawn = (Instance) =>
+                {
+					ModAPI.KeepExtraObjects();
+                    Instance.GetComponent<SpriteRenderer>().sprite = ModAPI.LoadSprite("models/921.png", 25f);
+					var ThompsonSlide = Instance.transform.Find("Slide");
+                    ThompsonSlide.GetComponent<SpriteRenderer>().sprite = ModAPI.LoadSprite("models/921_sl.png", 25f);
+                    Instance.GetComponent<FirearmBehaviour>().barrelPosition = new Vector2(0.25f, 0.10f);
+                    foreach (var c in Instance.GetComponents<Collider2D>())
+                    {
+                        GameObject.Destroy(c);
+                    }
+                    Instance.FixColliders();
+                    Instance.GetComponent<FirearmBehaviour>().BulletsPerShot = 1;
+
+                    var firearm = Instance.GetComponent<FirearmBehaviour>();
+                    Instance.GetComponent<FirearmBehaviour>().Automatic = false;
+                    Instance.GetComponent<FirearmBehaviour>().AutomaticFireInterval = 0.08f;
+
+                    firearm.ShotSounds = new AudioClip[]
+              {
+            ModAPI.LoadSound("sound/9.wav"),
+                };
+
+                    Cartridge customCartridge = ModAPI.FindCartridge("9mm");
+                    customCartridge.name = "9x21mm";
                     customCartridge.Damage *= 0.1f;
                     customCartridge.Recoil = 3.2f;
                     customCartridge.ImpactForce = 0.3f;
